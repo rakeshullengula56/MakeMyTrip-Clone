@@ -13,11 +13,27 @@ public class UserController {
     @Autowired
     private UserService userService;
     @PostMapping("/login")
-    public Users login(@RequestParam String email,@RequestParam String password){
-        return userService.login(email,password);
+    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
+        Users user = userService.login(email, password);
+
+        if (user != null) {
+            return ResponseEntity.ok(user);  // ✅ Return user if successful
+        } else {
+            return ResponseEntity.status(401).body("Invalid email or password");  // ❌ Return error if login fails
+        }
     }
+
+
     @PostMapping("/signup")
-    public ResponseEntity<Users> signUp(@RequestBody Users user){
-        return ResponseEntity.ok(userService.signUp(user));
+    public ResponseEntity<?> signUp(@RequestBody Users user) {
+        try {
+            Users savedUser = userService.signUp(user);
+            System.out.println("Signup successful: " + savedUser);  // ✅ Log the user in backend console
+            return ResponseEntity.ok(savedUser);
+        } catch (Exception e) {
+            System.err.println("Signup error: " + e.getMessage());  // ❌ Log error in backend
+            return ResponseEntity.status(400).body(e.getMessage());  // Return error response
+        }
     }
+
 }
