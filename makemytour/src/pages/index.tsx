@@ -1,6 +1,6 @@
 import { getFlight, getHotel } from "@/api";
 import Loader from "@/components/Loader";
-import SearchSelect from "@/components/SearchSelect";
+import { SearchSelect } from "@/components/SearchSelect";
 import { Button } from "@/components/ui/button";
 import { Bus, Calendar, Car, CreditCard, HomeIcon, Hotel, MapIcon, MapPin, Plane, QrCode, Shield, Train, Umbrella, Users } from "lucide-react";
 import { useRouter } from "next/router";

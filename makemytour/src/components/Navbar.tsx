@@ -73,14 +73,22 @@ const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
-          ) :(
-                <SignupDialog />
-            )}
-            
-          </div>
+          ) : (
+            <SignupDialog
+              trigger={
+                <Button
+                  variant="outline"
+                  className="bg-blue-600  text-white hover:bg-blue-700"
+                >
+                  Sign Up
+                </Button>
+              }
+            />
+          )}
         </div>
-      </header>
+      </div>
+    </header>
   );
 };
 
-export default Navbar
+export default Navbar;

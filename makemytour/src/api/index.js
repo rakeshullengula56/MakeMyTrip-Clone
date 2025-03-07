@@ -142,3 +142,33 @@ export const addHotel = async (
       console.log(error);
     }
   };
+  export const handleFlightBooking = async (userId, flightId, seats, price) => {
+    try {
+      const url = `${BACKEND_URL}/booking/flight?userId=${userId}&flightId=${flightId}&seats=${seats}&price=${price}`;
+      const res = await axios.post(url);
+      const data = res.data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  export const handleHotelBooking = async (userId, hotelId, rooms, price) => {
+    try {
+      const url = `${BACKEND_URL}/booking/flight?userId=${userId}&hotelId=${hotelId}&rooms=${rooms}&price=${price}`;
+      const res = await axios.post(url);
+      const data = res.data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  export const getUserByEmail = async (email) => {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/user/email?email=${email}`);
+      const data = res.data;
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };

@@ -1,30 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Button } from './ui/button';
-import { Input } from './ui/input';
+import React, { useState, useEffect, useRef } from 'react';
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 
-const SearchSelect = ({ options, placeHolder, value, onChange, icon, subtitle }: any) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
-    const wrapperRef = useRef<HTMLDivElement>(null);
+export function SearchSelect({ options, placeholder, value, onChange, icon, subtitle }: any) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-      function handleClickOutside(event: MouseEvent) {
-        if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-          setIsOpen(false);
-        }
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
       }
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, []);
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
-    const filteredOptions = options.filter((option:any) =>
-      option.label.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  
+  const filteredOptions = options.filter((option:any) =>
+    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div ref={wrapperRef} className="relative">
@@ -35,7 +34,7 @@ const SearchSelect = ({ options, placeHolder, value, onChange, icon, subtitle }:
         <div className="flex items-center space-x-2">
           {icon}
           <div className="flex-1 min-w-0">
-            <div className="text-sm text-gray-500 truncate">{placeHolder}</div>
+            <div className="text-sm text-gray-500 truncate">{placeholder}</div>
             <Input
               type="text"
               value={value || searchTerm}
@@ -44,7 +43,7 @@ const SearchSelect = ({ options, placeHolder, value, onChange, icon, subtitle }:
                 onChange('');
               }}
               className="font-semibold w-full bg-transparent border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-              placeholder={placeHolder}
+              placeholder={placeholder}
             />
             <div className="text-xs text-gray-400 truncate">{subtitle}</div>
           </div>
@@ -71,7 +70,5 @@ const SearchSelect = ({ options, placeHolder, value, onChange, icon, subtitle }:
         </div>
       )}
     </div>
-  )
+  );
 }
-
-export default SearchSelect

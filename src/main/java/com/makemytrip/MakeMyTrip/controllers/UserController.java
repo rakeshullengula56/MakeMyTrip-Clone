@@ -12,28 +12,26 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
-        Users user = userService.login(email, password);
-
-        if (user != null) {
-            return ResponseEntity.ok(user);  // ✅ Return user if successful
-        } else {
-            return ResponseEntity.status(401).body("Invalid email or password");  // ❌ Return error if login fails
-        }
+    public Users login(@RequestParam String email,@RequestParam String password){
+        return userService.login(email,password);
     }
-
-
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody Users user) {
-        try {
-            Users savedUser = userService.signUp(user);
-            System.out.println("Signup successful: " + savedUser);  // ✅ Log the user in backend console
-            return ResponseEntity.ok(savedUser);
-        } catch (Exception e) {
-            System.err.println("Signup error: " + e.getMessage());  // ❌ Log error in backend
-            return ResponseEntity.status(400).body(e.getMessage());  // Return error response
+    public ResponseEntity<Users> signUp(@RequestBody Users user){
+        return ResponseEntity.ok(userService.signUp(user));
+    }
+    @GetMapping("/email")
+    public ResponseEntity<Users> getUserByEmail(@RequestParam String email){
+        Users user = userService.getUserByEmail(email);
+        if(user != null){
+            return ResponseEntity.ok(user);
         }
+        return ResponseEntity.notFound().build();
+    }
+    @PostMapping("/edit")
+    public Users editProfile(@RequestParam String id ,@RequestBody Users updatedUser){
+        return userService.editProfile(id,updatedUser);
     }
 
 }

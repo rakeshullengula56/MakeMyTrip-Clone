@@ -1,31 +1,38 @@
-import React, { useEffect, useState } from 'react'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { getFlight } from '@/api';
-import Loader from '../Loader';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import { getFlight } from "@/api";
+import Loader from "../Loader";
 const FlightList = ({ onSelect }: any) => {
-    const [flight, setFlight] = useState<any[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [flight, setflight] = useState<any[]>([]);
+    const [loading, setloading] = useState(true);
     useEffect(() => {
-        const fetchFlights = async () => {
+        const fetchflight = async () => {
             try {
-                const data = await getFlight()
-                setFlight(data);
-
+                const data = await getFlight();
+                setflight(data);
             } catch (error) {
                 console.error(error);
             } finally {
-                setLoading(false);
+                setloading(false);
             }
-        }
-        fetchFlights();
-    }, [])
+        };
+        fetchflight();
+    }, []);
+
     if (loading) {
-        return <Loader></Loader>
+        return <Loader />;
     }
     return (
         <div>
-            <h3 className='text-lg font-semibold mb-2'>Flights List</h3>
+            <h3 className="text-lg font-semibold mb-2">Flight List</h3>
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -36,20 +43,25 @@ const FlightList = ({ onSelect }: any) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {flight.length > 0 ? (flight.map((flight: any) => (
-                        <TableRow key={flight._id}>
-                            <TableCell>{flight.flightName}</TableCell>
-                            <TableCell>{flight.from}</TableCell>
-                            <TableCell>{flight.to}</TableCell>
-                            <TableCell>
-                                <Button onClick={() => onSelect(flight)}>Edit</Button>
-                            </TableCell>
-                        </TableRow>))) : (<TableRow><TableCell>No Data</TableCell></TableRow>)
-                    }
+                    {flight.length > 0 ? (
+                        flight?.map((flight: any) => (
+                            <TableRow key={flight._id}>
+                                <TableCell>{flight.flightName}</TableCell>
+                                <TableCell>{flight.from}</TableCell>
+                                <TableCell>{flight.to}</TableCell>
+                                <TableCell>
+                                    <Button onClick={() => onSelect(flight)}>Edit</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell>No data</TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
         </div>
-    )
-}
-
-export default FlightList
+    );
+};
+export default FlightList;
