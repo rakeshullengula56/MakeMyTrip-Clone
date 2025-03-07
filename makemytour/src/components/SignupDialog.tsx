@@ -15,25 +15,43 @@ const SignupDialog = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [open, setOpen] = useState(false);
     const dispatch=useDispatch();
     const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            if (isSignup) {
-                const user = await signup(firstName, lastName, email, password, phoneNumber);
-                dispatch(setUser(user));
-            } else {
-                // ✅ Pass email and password separately (not as an object)
-                const user = await login(email, password);
-                dispatch(setUser(user));
-            }
-        } catch (error) {
-            console.error("Authentication error:", error);
+        if (isSignup) {
+          try {
+            const signin = await signup(
+              firstName,
+              lastName,
+              email,
+              phoneNumber,
+              password
+            );
+            dispatch(setUser(signin));
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          try {
+            const data = await login(email, password);
+            dispatch(setUser(data));
+            setOpen(false);
+            clearForm();
+          } catch (error) {
+            console.log(error);
+          }
         }
-    };
+      };
+    const clearForm=()=>{
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setPhoneNumber("");
+    }
     return (
-        <div>
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                     <Button className="bg-white text-black hover:bg-gray-200">Signup</Button>
                 </DialogTrigger>
@@ -96,7 +114,6 @@ const SignupDialog = () => {
                     </div>
                 </DialogContent>
             </Dialog>
-        </div>
     );
 };
 

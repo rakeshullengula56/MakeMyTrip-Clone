@@ -29,6 +29,7 @@ public class AdminController {
         List<Users> users=userRepository.findAll();
         return ResponseEntity.ok(users);
     }
+
     @PostMapping("/flight")
     public Flight addflight(@RequestBody Flight flight){
         return flightRepository.save(flight);

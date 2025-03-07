@@ -1,18 +1,15 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-const getUserFromLocalStorage = () => {
-
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-
-};
 
 const saveUserToLocalStorage = (user) => {
-    localStorage.setItem("user", JSON.stringify(user));
+  if (typeof window !== "undefined") {  // ✅ Prevent server error
+      localStorage.setItem("user", JSON.stringify(user));
+  }
 };
 
+
 const initialState = {
-    user: getUserFromLocalStorage(),
+    user: null,
 };
 
 const userSlice = createSlice({
