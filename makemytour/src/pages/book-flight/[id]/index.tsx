@@ -47,7 +47,7 @@ const BookFlightPage = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [open, setopem] = useState(false);
+  const [open, setOpen] = useState(false);
   const user = useSelector((state: any) => state.user.user);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -179,7 +179,7 @@ const BookFlightPage = () => {
         bookings: [...user.bookings, data],
       };
       dispatch(setUser(updateuser));
-      setopem(false);
+      setOpen(false);
       setQuantity(1);
       router.push("/profile");
     } catch (error) {
@@ -524,7 +524,7 @@ const BookFlightPage = () => {
                   </div>
                 </div>
               </div>
-              <Dialog open={open} onOpenChange={setopem}>
+              <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <Button className="w-full bg-red-600 text-white">
                     Book Now

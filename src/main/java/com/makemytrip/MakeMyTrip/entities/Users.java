@@ -6,8 +6,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
 
+import java.util.List;
+import java.util.ArrayList;
 @Data
 @Document(collection = "users")
 public class Users {
@@ -19,16 +20,15 @@ public class Users {
     private String password;
     private String role;
     private String phoneNumber;
-    private List<Booking> bookings;
+    private List<Booking> bookings = new ArrayList<>();;
 
-    @Setter
     @Getter
-    public static class Booking {
+    @Setter
+    public static class Booking{
         private String type;
         private String bookingId;
         private String date;
         private int quantity;
         private double totalPrice;
-
     }
 }

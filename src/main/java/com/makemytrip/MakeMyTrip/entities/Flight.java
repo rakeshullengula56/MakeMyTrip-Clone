@@ -2,9 +2,8 @@ package com.makemytrip.MakeMyTrip.entities;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "flight")
 @Data
+@Document(collection = "flight")
 public class Flight {
     @Id
     private String _id;
@@ -15,5 +14,4 @@ public class Flight {
     private String arrivalTime;
     private double price;
     private int availableSeats;
-
 }
